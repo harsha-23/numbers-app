@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        
+        .container {
+            width: 100%;
+            height: 100vh;
+            background: grey;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .calculator {
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(7px);
+            -webkit-backdrop-filter: blur(7px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 10px;
+        }
+        
+        .buttons_div .row button {
+            width: 70px;
+            height: 70px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(9px);
+            -webkit-backdrop-filter: blur(9px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            margin: 10px;
+            border: none;
+            font-size: 20px;
+        }
+        
+        .output_div .output {
+            padding: 10px;
+            width: 100%;
+            height: 80px;
+            text-align: right;
+            font-size: 25px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(9px);
+            -webkit-backdrop-filter: blur(9px);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            margin-bottom: 10px;
+        }
+        
+        .top_row button,
+        .color_btn {
+            color: rgb(0, 132, 255);
+        }
+        
+        .equal {
+            background: rgb(0, 132, 255) !important;
+            color: #fff;
+        }
+    </style>
+    <title>Arithmetic Service</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="calculator">
+            <div class="output_div">
+                <input type="text" placeholder="0" name="output" id="output" class="output">
+            </div>
+            <div class="buttons_div">
+                <div class="row top_row">
+                    <button onclick="allClear()">AC</button>
+                    <button onclick="deleteNum()">Del</button>
+                    <button onclick="displayNum('/')">/</button>
+
+
+                </div>
+                <div class="row">
+                    <button class="color_btn" onclick="displayNum('*')">*</button>
+                    <button class="color_btn" onclick="displayNum('-')">-</button>
+                    <button class="color_btn" onclick="displayNum('+')">+</button>
+
+                </div>
+                <div class="row">
+                    <button onclick="displayNum('7')">7</button>
+                    <button onclick="displayNum('8')">8</button>
+                    <button onclick="displayNum('9')">9</button>
+
+                </div>
+                <div class="row">
+                    <button onclick="displayNum('4')">4</button>
+                    <button onclick="displayNum('5')">5</button>
+                    <button onclick="displayNum('6')">6</button>
+                </div>
+                <div class="row">
+                    <button onclick="displayNum('1')">1</button>
+                    <button onclick="displayNum('2')">2</button>
+                    <button onclick="displayNum('3')">3</button>
+                </div>
+                <div class="row">
+                    <button onclick="displayNum('0')">0</button>
+                    <button onclick="displayNum('.')">.</button>
+                    <button class="equal" onclick="calculate()">=</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var outputDiv = document.getElementById("output");
+
+        const displayNum = (num) => {
+            outputDiv.value += num;
+        }
+
+        const deleteNum = () => {
+            outputDiv.value = outputDiv.value.slice(0, -1);
+        }
+        const allClear = () => {
+            outputDiv.value = '';
+        }
+        const calculate = () => {
+            console.log("geg");
+            fetch(`https://arithmetic-service-ybp6.onrender.com/calculate/${outputDiv.value}`)
+                .then(response => response.text())
+                .then(data => {
+                    outputDiv.value = data;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+
+</html>
